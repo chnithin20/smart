@@ -1,0 +1,24 @@
+{
+  "name": "smart-parking-email-server",
+  "version": "1.0.0",
+  "description": "Email notification server for Smart Parking application",
+  "main": "emailServer.js",
+  "scripts": {
+    "start": "node emailServer.js",
+    "dev": "nodemon emailServer.js",
+    "test": "node test-email.js"
+  },
+  "keywords": ["email", "nodemailer", "express", "parking"],
+  "author": "Smart Parking Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

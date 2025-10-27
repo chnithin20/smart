@@ -1,0 +1,28 @@
+.contact-us-inline { background:#1a1e27; padding: 60px 20px; border-top:1px solid #30363d; overflow:hidden; }
+.contact-wrap { max-width: 1100px; margin: 0 auto; display:flex; gap:28px; align-items: stretch; }
+.contact-left { flex:1; background:#12161f; border:1px solid #2d3442; border-radius:14px; position:relative; overflow:hidden; min-height:440px; }
+.car-stage { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.hero-car { position:relative; left:0; bottom:0; width:115%; max-width:none; z-index:3; filter: drop-shadow(0 24px 40px rgba(0,0,0,.6));
+    transform-origin: center bottom; transform: scaleX(-1) translateX(-220%); pointer-events:none; opacity:0; }
+.hero-car.run { animation: car-enter 1.4s cubic-bezier(.22,1,.36,1) 0s 1 both; }
+.hero-car.stay { opacity:1 !important; transform: scaleX(-1) translateX(0%) !important; }
+@keyframes car-enter {
+    0%   { opacity: 0; transform: scaleX(-1) translateX(-220%); }
+    60%  { opacity: 1; transform: scaleX(-1) translateX(-8%); }
+    85%  { transform: scaleX(-1) translateX(3%); }
+    100% { transform: scaleX(-1) translateX(0%); }
+}
+/* subtle lane glow */
+.lane-glow { position:absolute; left:0; right:-40%; bottom:0; height:4px; background: linear-gradient(90deg, rgba(88,166,255,.0), rgba(88,166,255,.6), rgba(139,92,246,.6), rgba(88,166,255,.0)); filter: blur(2px); opacity:.55; }
+@media (prefers-reduced-motion: reduce) { .hero-car { animation: none !important; } }
+@media (max-width: 860px) { .hero-car { left:-4%; width:125%; max-width:none; } .contact-left { min-height:360px; } }
+.contact-right { flex:1; background:#ffffff; border-radius:14px; padding:26px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.contact-right h4 { margin:0 0 6px; color:#0f172a; font-size:1.4rem; font-weight:800; }
+.contact-right small { color:#475569; display:block; margin-bottom:14px; }
+.contact-form { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.contact-form input, .contact-form textarea { width:100%; border:1px solid #e2e8f0; background:#f8fafc; padding:12px 10px; border-radius:8px; outline:none; }
+.contact-form textarea { grid-column:1 / -1; resize:vertical; min-height:110px; }
+.submit-row { grid-column:1 / -1; }
+.send-btn { width:100%; background:#58a6ff; color:#0b1220; border:0; padding:12px; font-weight:800; border-radius:10px; cursor:pointer; }
+.send-btn:hover { background:#4a97f0; }
+@media (max-width: 860px) { .contact-wrap { flex-direction:column; } .contact-form { grid-template-columns: 1fr; } }

@@ -1,0 +1,300 @@
+/* Split Pricing Section Styles */
+.split-pricing-section {
+    padding: 80px 20px;
+    background-color: #1a1e27;
+    text-align: center;
+}
+
+.split-pricing-section h2 {
+    font-size: 2.8em;
+    color: #ffffff;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.split-pricing-section p {
+    font-size: 1.2em;
+    color: #c9d1d9;
+    margin-bottom: 60px;
+}
+
+/* Replicating the HTML structure and applying Tailwind classes (dark mode) */
+.split-pricing-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+    padding: 20px 16px;
+    background-color: #1a1e27;
+    font-family: sans-serif;
+    color: #ffffff;
+}
+
+.split-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+}
+
+/* --- Left Side Content --- */
+.split-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.split-left p:first-child {
+    color: #dc2626;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.split-left h2 {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.25;
+}
+
+.split-left p:nth-child(3) {
+    color: #9ca3af;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+
+/* Tabs Styling - Replicated from CSS */
+.split-tabs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.split-tab {
+    padding: 8px 16px;
+    color: #ffffff;
+    font-weight: 600;
+    border-bottom: 4px solid #dc2626;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.split-tab.inactive {
+    color: #9ca3af;
+    border-bottom: 4px solid transparent;
+}
+
+.split-tab.inactive:hover {
+    color: #ffffff;
+    border-bottom-color: #6b7280;
+}
+
+/* Image on the left (bottom) - Animation Applied */
+.split-image-bottom {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
+    will-change: transform;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.split-image-bottom:hover {
+    transform: translateY(-12px);
+}
+
+/* --- Right Side Content & Card --- */
+.split-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Pages carousel (replaces Management Dashboard) */
+.split-carousel {
+    position: relative;
+}
+
+.split-image-top {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
+    will-change: transform;
+    transition: transform 0.3s ease;
+    background-color: #1f2937;
+}
+
+.split-image-top:hover {
+    transform: translateY(-12px);
+}
+
+.split-controls {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.split-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: rgba(31, 41, 55, 0.7);
+    color: #e5e7eb;
+    border: 1px solid #4b5563;
+    cursor: pointer;
+}
+
+.split-btn:hover {
+    background-color: #374151;
+}
+
+/* Plan Card Styling - Animation Applied */
+.split-card {
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid #374151;
+    will-change: transform;
+    background-color: #1f2937;
+}
+
+.split-card h3 {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.split-discount {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #374151;
+    flex-wrap: wrap;
+    gap-y: 1rem;
+}
+
+.split-discount p {
+    color: #f87171;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.split-price {
+    text-align: right;
+}
+
+.split-price span:first-child {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #f87171;
+    display: block;
+}
+
+.split-price span:last-child {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    display: block;
+    font-weight: normal;
+}
+
+/* Features List Styling (Using CheckCircle for icons) */
+.split-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.split-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    min-width: 45%;
+}
+
+.split-features li {
+    display: flex;
+    align-items: flex-start;
+    color: #e5e7eb;
+    margin-bottom: 12px;
+}
+
+.split-features li svg {
+    width: 20px;
+    height: 20px;
+    color: #10b981;
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.split-features li span {
+    font-weight: 600;
+}
+
+.split-features li span:first-child {
+    font-weight: 600;
+}
+
+/* Learn More Button */
+.split-cta {
+    width: 100%;
+    background-color: #dc2626;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.125rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+    border: none;
+}
+
+.split-cta:hover {
+    background-color: #b91c1c;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .split-pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .split-left {
+        order: 2;
+    }
+    .split-right {
+        order: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .split-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    .split-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .split-features ul {
+        min-width: 100%;
+    }
+}

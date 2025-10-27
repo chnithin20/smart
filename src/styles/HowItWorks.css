@@ -1,0 +1,332 @@
+/* The entire application should be wrapped in .smart-park-system */
+.smart-park-system {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    background-color: #1a1e27;
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #2b313b;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.navbar .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #58a6ff;
+    text-decoration: none;
+    letter-spacing: 1.5px;
+}
+
+.navbar-links a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #c9d1d9;
+    font-size: 1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #ffc107;
+}
+
+/* --- Top Features Bar Styles --- */
+.top-features-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #30363d;
+    padding: 10px 20px;
+    gap: 10px;
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 50px;
+}
+
+.feature-item {
+    color: #90a4ae;
+    font-size: 0.9em;
+    padding: 5px 15px;
+    border-radius: 20px;
+    background-color: #444c56;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* --- SECTION: Why Choose Us --- */
+.why-choose-us {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #1a1e27;
+}
+
+.why-choose-us h2 {
+  font-size: 2.8em;
+  color: #ffffff;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.why-choose-us .tagline { /* Added class for clarity */
+  font-size: 1.2em;
+  color: #c9d1d9;
+  margin-bottom: 60px;
+  display: block;
+}
+
+.feature-cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.feature-card {
+  background-color: #2b313b;
+  border-radius: 12px;
+  padding: 30px;
+  width: 250px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover Effect for the right side shape */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0; /* Starts hidden */
+  height: 100%;
+  background: linear-gradient(to right, rgba(88,166,255,0.3), rgba(56,189,248,0.3));
+  transition: width 0.3s ease-out;
+  z-index: 0;
+  border-radius: 0 12px 12px 0;
+}
+
+.feature-card:hover::after {
+  width: 100%; /* Expands to full width on hover */
+  left: 0;
+  border-radius: 12px;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(88, 166, 255, 0.5);
+}
+
+.feature-card .icon {
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  color: #58a6ff;
+  position: relative;
+  z-index: 1;
+}
+/* Custom icon colors */
+.feature-card .icon.save-time { color: #8b5cf6; }
+.feature-card .icon.best-prices { color: #34d399; }
+.feature-card .icon.secure-safe { color: #fbbf24; }
+.feature-card .icon.easy-access { color: #ef4444; }
+
+
+.feature-card h3 {
+  font-size: 1.5em;
+  color: #ffffff;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-card p {
+  font-size: 0.95em;
+  color: #c9d1d9;
+  margin-bottom: 0;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 992px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+  }
+  .navbar .logo {
+    margin-bottom: 10px;
+  }
+  .navbar-links a {
+    margin: 0 15px;
+  }
+  .feature-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .navbar-links a {
+    margin: 5px 0;
+  }
+  .feature-card {
+    width: 90%;
+  }
+}
+
+/* --- How It Works Section --- (The user's core styling block) */
+.how-it-works-section {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #1a1e27;
+}
+
+.how-it-works-section h2 { font-size: 2.8em; color: #ffffff; margin-bottom: 10px; letter-spacing: 1px; }
+.how-it-works-section p { font-size: 1.2em; color: #c9d1d9; margin-bottom: 60px; }
+
+.steps-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* --- CORE CARD STYLES --- */
+.step-card {
+  background-color: #2b313b;
+  border-radius: 12px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s ease-in-out;
+  border: 1px solid #30363d;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  color: #e0e0e0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+/* THE INNER HIGHLIGHT DIV */
+.inner-highlight {
+  padding: 0;
+  border-radius: 8px;
+  background-color: #2b313b;
+  flex-grow: 1;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+  z-index: 2;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* WRAPPER FOR CONTENT PADDING */
+.content-wrapper {
+  padding: 30px 20px;
+  color: inherit;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* The Card's Outer Glow on Hover */
+.step-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(88,166,255,0.5);
+  border-color: #58a6ff;
+}
+
+/* --- THE CLEAN INNER SHAPE EFFECT ON HOVER --- */
+.step-card:hover .inner-highlight {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  color: #1a1e27;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.7);
+}
+
+/* --- ICON/IMAGE CONTAINER STYLING --- */
+.icon-container {
+  /* Base style for the circle background */
+  font-size: 2em;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #58a6ff;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 25px;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.7);
+  transition: all 0.5s ease;
+}
+/* Adjust icon/image container colors for high contrast when INNER-HIGHLIGHT is active */
+.step-card:hover .icon-container {
+  background-color: #1a1e27;
+  box-shadow: none;
+}
+
+/* If using Font Awesome icon */
+.step-card:hover .icon-container i {
+  color: #ffc107; /* Change the icon color to match the highlight */
+}
+
+.step-card h3 {
+  font-size: 1.8em;
+  color: inherit;
+  margin-bottom: 15px;
+  transition: color 0.5s ease;
+}
+.step-card p {
+  font-size: 1em;
+  color: inherit;
+}
+
+/* Arrow between steps */
+.arrow {
+  color: #58a6ff;
+  font-size: 2.5em;
+  align-self: center;
+  margin: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 992px) {
+  .steps-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .arrow {
+    transform: rotate(90deg);
+    margin: 20px 0;
+  }
+  .step-card {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+@media (max-width: 576px) {
+  .how-it-works-section h2 { font-size: 2em; }
+  .how-it-works-section p { font-size: 1em; margin-bottom: 30px; }
+}

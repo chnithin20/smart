@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dana - Blog News Section with Zoom Effect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ======================================= */
+        /* CSS STYLES */
+        /* ======================================= */
+        
+        /* Basic Reset and Font Setup */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Section Title Styling */
+        .blog-news-section {
+            text-align: center;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .latest-news-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 50px;
+        }
+
+        /* Blog Cards Container (Flexbox for 3 columns) */
+        .blog-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        /* Individual Blog Card Styling */
+        .blog-card {
+            background-color: #fff;
+            padding-bottom: 20px;
+            text-align: left;
+            flex: 1;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        /* Hover Effect for the entire card (subtle lift) */
+        .blog-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ======================================= */
+        /* IMAGE ZOOM EFFECT */
+        /* ======================================= */
+
+        .card-image-wrapper {
+            position: relative;
+            overflow: hidden; /* Hides parts of the image that zoom out of bounds */
+            margin-bottom: 15px;
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Defines the smooth animation speed for the zoom effect */
+            transition: transform 0.4s ease-in-out; 
+        }
+        
+        /* The main animation rule: zooms in when hovering over the wrapper */
+        .card-image-wrapper:hover img {
+            transform: scale(1.08); /* Zooms the image to 108% of its original size */
+        }
+
+        .image-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            font-weight: 600;
+            z-index: 10; 
+        }
+
+        /* Post Content Styling */
+        .blog-card h3.post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            padding: 0 15px;
+            margin-top: 0;
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: #888;
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-meta .category {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .post-meta .date {
+            color: #ff6a00; /* Example accent color for date */
+        }
+
+        .post-snippet {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            margin-left: 15px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background-color: #ff6a00;
+            color: #fff;
+            border-color: #ff6a00;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="blog-news-section">
+        <h5 class="latest-news-title">LATEST NEWS</h5>
+        <h2 class="section-title">From Blog News</h2>
+
+        <div class="blog-container">
+            <div class="blog-card">
+                <div class="card-image-wrapper">
+                    <img src="path/to/your/image_1.jpg" alt="Woman with surprised eyes">
+                    <span class="image-label">feature 1</span>
+                </div>
+                <h3 class="post-title">India launches 'monster rocket'</h3>
+                <p class="post-meta">
+                    By admin | Date <span class="date">Dec 21, 2017</span> | in <span class="category">Business</span>
+                </p>
+                <p class="post-snippet">
+                    Integer posuere erat a ante venenatis dapibus posuere velit aliquipresent commodo cursus magnus.
+                </p>
+                <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+
+            <div class="blog-card">
+                <div class="card-image-wrapper">
+                    <img src="path/to/your/image_2.jpg" alt="Man working on a laptop">
+                </div>
+                <h3 class="post-title">India launches 'monster rocket'</h3>
+                <p class="post-meta">
+                    By admin | Date <span class="date">Dec 28, 2017</span> | in <span class="category">Corporate</span>
+                </p>
+                <p class="post-snippet">
+                    Integer posuere erat a ante venenatis dapibus posuere velit aliquipresent commodo cursus magnus.
+                </p>
+                <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+
+            <div class="blog-card">
+                <div class="card-image-wrapper">
+                    <img src="path/to/your/image_3.jpg" alt="Couple embracing">
+                </div>
+                <h3 class="post-title">India launches 'monster rocket'</h3>
+                <p class="post-meta">
+                    By admin | Date <span class="date">Dec 28, 2017</span> | in <span class="category">Life Style</span>
+                </p>
+                <p class="post-snippet">
+                    Integer posuere erat a ante venenatis dapibus posuere velit aliquipresent commodo cursus magnus.
+                </p>
+                <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

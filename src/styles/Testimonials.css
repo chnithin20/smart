@@ -1,0 +1,22 @@
+.testimonials-section { padding: 80px 20px; text-align: center; background-color: #1a1e27; }
+.testimonials-section h2 { font-size: 3em; font-weight: 800; color: #ffffff; margin-bottom: 5px; }
+.testimonials-section p { font-size: 1.2em; color: #c9d1d9; margin-bottom: 50px; }
+.testimonial-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; }
+.testimonial-card { background-color: #2b313b; border-radius: 12px; padding: 30px; width: 300px; text-align: left; border: 1px solid #30363d; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.testimonial-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(88,166,255,0.2), 0 0 5px #58a6ff; }
+.testimonial-card .stars { color: #ffc107; margin-bottom: 15px; font-size: 1.2em; }
+.testimonial-card .quote { font-size: 1.1em; color: #e0e0e0; margin-bottom: 20px; font-style: italic; }
+.testimonial-card .author { font-size: 1em; font-weight: 700; color: #58a6ff; margin-bottom: 5px; }
+.testimonial-card .role { font-size: 0.9em; color: #90a4ae; display: block; }
+.creative-cta-section { background-color: #4b0082; padding: 50px 20px; text-align: center; position: relative; overflow: hidden; }
+.creative-cta-section .cta-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.35; }
+.creative-cta-box { position: relative; z-index: 2; }
+.creative-cta-section h2 { font-size: 3.5em; font-weight: 800; color: #ffffff; margin-bottom: 10px; line-height: 1.1; }
+.creative-cta-section p { font-size: 1.3em; color: #e0e0e0; margin-bottom: 0; }
+.creative-cta-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(-45deg,#6a0dad,#6a0dad 10px,#7b27d8 10px,#7b27d8 20px), linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%); opacity: 0.1; transform: translateX(-100%); transition: transform 0.8s ease-out; z-index: 1; }
+.creative-cta-section:hover::before { transform: translateX(0); }
+/* blinking cursor next to CTA headline */
+.typing-cursor { display: inline-block; width: 0.6ch; border-right: 3px solid #ffffff; animation: blink 0.9s steps(1,end) infinite; margin-left: 6px; height: 1em; vertical-align: baseline; }
+@keyframes blink { 50% { border-color: transparent; } }
+@media (max-width: 992px) { .testimonial-card { width: 45%; } .creative-cta-section h2 { font-size: 2.5em; } }
+@media (max-width: 576px) { .testimonial-card { width: 90%; } .creative-cta-section h2 { font-size: 2em; } .creative-cta-section p { font-size: 1.1em; } }

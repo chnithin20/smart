@@ -1,0 +1,107 @@
+.stats-section {
+    padding: 80px 20px;
+    background-color: #1a1e27;
+    border-top: 1px solid #30363d;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.stats-background {
+    position: absolute;
+    inset: 0;
+    /* Corrected CSS line */
+    background-image: url('acc.jpeg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+.cta-box {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    background-color: #2b313b;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #30363d;
+}
+.cta-box h2 {
+    font-size: 3.5em;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    background: -webkit-linear-gradient(left, #58a6ff, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.cta-box h2 .highlight {
+    color: #fbbf24;
+    -webkit-text-fill-color: #fbbf24;
+}
+.cta-button {
+    background-color: #ffc107;
+    color: #1a1e27;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(255, 193, 7, 0.4);
+}
+.cta-button:hover {
+    background-color: #e0a800;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+}
+.stats-bar {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    background-color: #30363d;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
+}
+.stat-item {
+    text-align: center;
+    padding: 10px;
+}
+.stat-item i {
+    font-size: 2.2em;
+    color: #ffc107;
+    margin-bottom: 10px;
+}
+.stat-number {
+    font-size: 3.5em;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 5px;
+    display: block;
+}
+.stat-label {
+    font-size: 1.1em;
+    color: #ffc107;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+@media (max-width: 992px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .cta-box h2 { font-size: 2.5em; }
+}
+@media (max-width: 576px) {
+    .stats-bar { grid-template-columns: 1fr; }
+    .cta-box { padding: 24px; }
+    .cta-box h2 { font-size: 2em; }
+    .cta-button { padding: 12px 30px; font-size: 1em; }
+}
