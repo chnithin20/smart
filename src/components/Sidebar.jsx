@@ -1,19 +1,28 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, Settings, X, Calendar, BookOpen, User, Shield, FileText, Bell } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const navItems = [
+  const { user } = useAuth();
+
+  const userNavItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/booking', icon: Calendar, label: 'Book Parking' },
     { path: '/my-bookings', icon: BookOpen, label: 'My Bookings' },
-    { path: '/analytics', icon: BarChart3, label: 'Analytics' },
-    { path: '/reports', icon: FileText, label: 'Reports' },
-    { path: '/notifications', icon: Bell, label: 'Notifications' },
-    { path: '/admin', icon: Shield, label: 'Admin Panel' },
     { path: '/profile', icon: User, label: 'My Profile' },
     { path: '/settings', icon: Settings, label: 'Settings' },
   ];
+
+  const adminNavItems = [
+    { path: '/admin', icon: Shield, label: 'Admin Panel' },
+    { path: '/analytics', icon: BarChart3, label: 'Analytics' },
+    { path: '/reports', icon: FileText, label: 'Reports' },
+    { path: '/notifications', icon: Bell, label: 'Notifications' },
+    { path: '/settings', icon: Settings, label: 'Settings' },
+  ];
+
+  const navItems = user?.role === 'admin' ? adminNavItems : userNavItems;
 
   return (
     <>
@@ -44,21 +53,21 @@ const Sidebar = ({ isOpen, onClose }) => {
         {/* Navigation */}
         <nav className="px-4 py-6 space-y-2">
           {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`
-              }
-            >
-              <item.icon size={20} />
-              <span className="font-medium">{item.label}</span>
-            </NavLink>
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 transform hover:scale-[1.02] ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`
+                }
+              >
+                <item.icon size={20} />
+                <span className="font-medium">{item.label}</span>
+              </NavLink>
           ))}
         </nav>
 

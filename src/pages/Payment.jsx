@@ -208,6 +208,10 @@ const Payment = () => {
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Location</span>
+                  <span className="text-white">{booking.location?.name}</span>
+                </div>
+                <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Parking Slot</span>
                   <span className="text-white">#{booking.slot?.number}</span>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Car, CreditCard, Check } from 'lucide-react';
+import { Calendar, Clock, MapPin, Car, CreditCard, Check, Image as ImageIcon } from 'lucide-react';
 import { getParkingLevels } from '../api/parkingAPI';
 import { validateEmail, validatePhone, validateVehicleNumber, validateRequired, validateMinLength } from '../utils/validation';
 
@@ -9,6 +9,7 @@ const Booking = () => {
   const [step, setStep] = useState(1);
   const [parkingLevels, setParkingLevels] = useState([]);
   const [booking, setBooking] = useState({
+    location: null,
     level: '',
     slot: null,
     date: '',
@@ -20,6 +21,37 @@ const Booking = () => {
     email: '',
     phone: '',
   });
+
+  const locations = [
+    {
+      id: 1,
+      name: 'Inorbit Mall',
+      address: 'S No. 64, APIIC Software Layout, Inorbit Mall Road, Mindspace, Madhapur, Hyderabad, Telangana 500081',
+      whyGo: 'Large retail & entertainment space in the IT-hub area, good for shopping + dining.',
+      imageUrl: 'https://www.scai.in/wp-content/uploads/2019/09/DJI_0489-scaled.jpg'
+    },
+    {
+      id: 2,
+      name: 'The Forum Sujana Mall',
+      address: 'Plot No. S-16, Survey No. 1009, K P H B Phase 6, Kukatpally Housing Board Colony, Kukatpally, Hyderabad, Telangana 500072',
+      whyGo: 'One of the large malls in the Kukatpally area; good for a full-day outing.',
+      imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/49/b2/e4/transform-your-shopping.jpg?h=-1&s=1&w=1200'
+    },
+    {
+      id: 3,
+      name: 'GVK One Mall',
+      address: 'Road No. 1, Banjara Hills, Hyderabad, Telangana 500034',
+      whyGo: 'Located in a premium area (Banjara Hills), good mix of upscale shopping + entertainment.',
+      imageUrl: 'https://i.ytimg.com/vi/zmnXmeIk1V4/maxresdefault.jpg'
+    },
+    {
+      id: 4,
+      name: 'Sarath City Capital Mall',
+      address: 'Gachibowli-Miyapur Road, Hyderabad, Telangana',
+      whyGo: 'Massive mall, lots of stores and dining; good if you’re in the western IT corridor.',
+      imageUrl: 'https://sarathcitycapitalmall.com/wp-content/uploads/slider/cache/cb345941e8100f00006dc88c2f0b5d97/mall-outside.jpg'
+    }
+  ];
 
   const [errors, setErrors] = useState({});
 
@@ -39,7 +71,12 @@ const Booking = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setBooking((prev) => ({ ...prev, [name]: value }));
+    if (name === 'location') {
+      const selectedLocation = locations.find(loc => loc.id === parseInt(value));
+      setBooking((prev) => ({ ...prev, location: selectedLocation }));
+    } else {
+      setBooking((prev) => ({ ...prev, [name]: value }));
+    }
 
     // Clear error for this field when user starts typing
     if (errors[name]) {
@@ -144,6 +181,48 @@ const Booking = () => {
           {step === 1 && (
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-white mb-6">Select Parking Spot</h2>
+
+              {/* Location Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <MapPin className="inline mr-2" size={16} />
+                  Select Location
+                </label>
+                <select
+                  name="location"
+                  value={booking.location ? booking.location.id : ''}
+                  onChange={handleInputChange}
+                  className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select a mall location</option>
+                  {locations.map((loc) => (
+                    <option key={loc.id} value={loc.id}>
+                      {loc.name}
+                    </option>
+                  ))}
+                </select>
+                {booking.location && (
+                  <div className="mt-4 p-4 bg-gray-700 rounded-lg space-y-3">
+                    {booking.location.imageUrl && (
+                      <img
+                        src={booking.location.imageUrl}
+                        alt={booking.location.name}
+                        className="w-full h-32 object-cover rounded-lg"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'block';
+                        }}
+                      />
+                    )}
+                    <div className="hidden">
+                      <ImageIcon size={32} className="mx-auto text-gray-400" />
+                    </div>
+                    <p className="text-sm text-gray-300 font-medium">{booking.location.address}</p>
+                    <p className="text-xs text-gray-400 italic">{booking.location.whyGo}</p>
+                  </div>
+                )}
+              </div>
 
               {/* Date & Time */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -250,7 +329,7 @@ const Booking = () => {
 
               <button
                 onClick={() => setStep(2)}
-                disabled={!booking.slot || !booking.date || !booking.startTime}
+                disabled={!booking.location || !booking.slot || !booking.date || !booking.startTime}
                 className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 Continue to Details
@@ -399,6 +478,10 @@ const Booking = () => {
               <h2 className="text-2xl font-bold text-white mb-6">Confirm Booking</h2>
 
               <div className="bg-gray-700 rounded-lg p-6 space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Location:</span>
+                  <span className="text-white font-semibold">{booking.location?.name}</span>
+                </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">Parking Level:</span>
                   <span className="text-white font-semibold">{selectedLevel?.name}</span>

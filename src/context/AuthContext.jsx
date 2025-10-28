@@ -24,8 +24,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    // Determine role based on email
+    const role = userData.email.toLowerCase().includes('admin') ? 'admin' : 'user';
+    const userWithRole = { ...userData, role };
+    setUser(userWithRole);
+    localStorage.setItem('user', JSON.stringify(userWithRole));
   };
 
   const logout = () => {

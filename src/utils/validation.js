@@ -4,7 +4,7 @@
  * Validate email format
  */
 export const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@((gmail|outlook|hotmail|yahoo|aol)\.com)$/i;
   return emailRegex.test(email);
 };
 
@@ -12,7 +12,7 @@ export const validateEmail = (email) => {
  * Validate phone number (Indian format)
  */
 export const validatePhone = (phone) => {
-  const phoneRegex = /^[+]?[0-9]{10,13}$/;
+  const phoneRegex = /^[+][0-9]{1,4}\d{10}$/;
   return phoneRegex.test(phone.replace(/[\s-]/g, ''));
 };
 

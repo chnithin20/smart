@@ -1,115 +1,79 @@
-import React, { useState } from 'react';
-import { Download, FileText, Calendar, TrendingUp, DollarSign, Car, Users } from 'lucide-react';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Download, Calendar, TrendingUp, DollarSign, Car, Users, Loader2, AlertCircle } from 'lucide-react';
 
 const Reports = () => {
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     endDate: new Date().toISOString().split('T')[0]
   });
+  const [reportData, setReportData] = useState({
+    summary: {},
+    bookings: [],
+    revenue: []
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data - in production, fetch from API
-  const reportData = {
-    summary: {
-      totalBookings: 1247,
-      totalRevenue: 485600,
-      activeUsers: 892,
-      avgOccupancy: 76,
-      totalVehicles: 3421,
-      cancelledBookings: 89
-    },
-    bookings: [
-      { id: 'BK001', date: '2025-10-20', user: 'Rajesh Kumar', slot: 'A-23', vehicle: 'KA01AB1234', amount: 200, status: 'Completed' },
-      { id: 'BK002', date: '2025-10-21', user: 'Priya Sharma', slot: 'B-15', vehicle: 'KA02CD5678', amount: 150, status: 'Completed' },
-      { id: 'BK003', date: '2025-10-22', user: 'Amit Patel', slot: 'C-08', vehicle: 'KA03EF9012', amount: 400, status: 'Completed' },
-      { id: 'BK004', date: '2025-10-23', user: 'Sneha Reddy', slot: 'A-12', vehicle: 'KA04GH3456', amount: 300, status: 'Completed' },
-      { id: 'BK005', date: '2025-10-24', user: 'Vikram Singh', slot: 'D-05', vehicle: 'KA05IJ7890', amount: 250, status: 'Active' },
-    ],
-    revenue: [
-      { month: 'Jan', amount: 45000 },
-      { month: 'Feb', amount: 52000 },
-      { month: 'Mar', amount: 48000 },
-      { month: 'Apr', amount: 61000 },
-      { month: 'May', amount: 58000 },
-      { month: 'Jun', amount: 67000 },
-    ]
-  };
+  const fetchReportData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const [summaryRes, bookingsRes, revenueRes] = await Promise.all([
+        fetch(`/api/reports/summary?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`),
+        fetch(`/api/reports/bookings?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`),
+        fetch(`/api/reports/revenue?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`)
+      ]);
 
-  const exportToPDF = () => {
-    const doc = new jsPDF();
-    
-    // Header
-    doc.setFontSize(20);
-    doc.setTextColor(59, 130, 246);
-    doc.text('Smart Parking - Report', 14, 20);
-    
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
-    doc.text(`Period: ${dateRange.startDate} to ${dateRange.endDate}`, 14, 34);
-    
-    // Summary Section
-    doc.setFontSize(14);
-    doc.setTextColor(0);
-    doc.text('Summary', 14, 45);
-    
-    const summaryData = [
-      ['Total Bookings', reportData.summary.totalBookings],
-      ['Total Revenue', `₹${reportData.summary.totalRevenue.toLocaleString()}`],
-      ['Active Users', reportData.summary.activeUsers],
-      ['Average Occupancy', `${reportData.summary.avgOccupancy}%`],
-      ['Total Vehicles', reportData.summary.totalVehicles],
-      ['Cancelled Bookings', reportData.summary.cancelledBookings],
-    ];
-    
-    doc.autoTable({
-      startY: 50,
-      head: [['Metric', 'Value']],
-      body: summaryData,
-      theme: 'grid',
-      headStyles: { fillColor: [59, 130, 246] },
-    });
-    
-    // Bookings Section
-    doc.setFontSize(14);
-    doc.text('Recent Bookings', 14, doc.lastAutoTable.finalY + 15);
-    
-    const bookingsData = reportData.bookings.map(b => [
-      b.id,
-      b.date,
-      b.user,
-      b.slot,
-      b.vehicle,
-      `₹${b.amount}`,
-      b.status
-    ]);
-    
-    doc.autoTable({
-      startY: doc.lastAutoTable.finalY + 20,
-      head: [['ID', 'Date', 'User', 'Slot', 'Vehicle', 'Amount', 'Status']],
-      body: bookingsData,
-      theme: 'striped',
-      headStyles: { fillColor: [59, 130, 246] },
-      styles: { fontSize: 8 },
-    });
-    
-    // Footer
-    const pageCount = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-      doc.setFontSize(8);
-      doc.setTextColor(150);
-      doc.text(
-        `Page ${i} of ${pageCount}`,
-        doc.internal.pageSize.width / 2,
-        doc.internal.pageSize.height - 10,
-        { align: 'center' }
-      );
+      if (!summaryRes.ok || !bookingsRes.ok || !revenueRes.ok) {
+        throw new Error('Failed to fetch report data');
+      }
+
+      const [summary, bookings, revenue] = await Promise.all([
+        summaryRes.json(),
+        bookingsRes.json(),
+        revenueRes.json()
+      ]);
+
+      setReportData({ summary, bookings, revenue });
+    } catch (err) {
+      console.error('Error fetching reports:', err);
+      // Fallback to mock data
+      const mockData = {
+        summary: {
+          totalBookings: 1247,
+          totalRevenue: 485600,
+          activeUsers: 892,
+          avgOccupancy: 76,
+          totalVehicles: 3421,
+          cancelledBookings: 89
+        },
+        bookings: [
+          { id: 'BK001', date: '2025-10-20', user: 'Rajesh Kumar', slot: 'A-23', vehicle: 'KA01AB1234', amount: 200, status: 'Completed' },
+          { id: 'BK002', date: '2025-10-21', user: 'Priya Sharma', slot: 'B-15', vehicle: 'KA02CD5678', amount: 150, status: 'Completed' },
+          { id: 'BK003', date: '2025-10-22', user: 'Amit Patel', slot: 'C-08', vehicle: 'KA03EF9012', amount: 400, status: 'Completed' },
+          { id: 'BK004', date: '2025-10-23', user: 'Sneha Reddy', slot: 'A-12', vehicle: 'KA04GH3456', amount: 300, status: 'Completed' },
+          { id: 'BK005', date: '2025-10-24', user: 'Vikram Singh', slot: 'D-05', vehicle: 'KA05IJ7890', amount: 250, status: 'Active' },
+        ],
+        revenue: [
+          { month: 'Jan', amount: 45000 },
+          { month: 'Feb', amount: 52000 },
+          { month: 'Mar', amount: 48000 },
+          { month: 'Apr', amount: 61000 },
+          { month: 'May', amount: 58000 },
+          { month: 'Jun', amount: 67000 },
+        ]
+      };
+      setReportData(mockData);
+      setError('Using mock data as fallback. API unavailable.');
+    } finally {
+      setLoading(false);
     }
-    
-    doc.save(`parking-report-${Date.now()}.pdf`);
-  };
+  }, [dateRange]);
+
+  useEffect(() => {
+    fetchReportData();
+  }, [fetchReportData]);
+
 
   const exportToCSV = () => {
     const headers = ['Booking ID', 'Date', 'User', 'Slot', 'Vehicle', 'Amount', 'Status'];
@@ -164,34 +128,52 @@ const Reports = () => {
     window.URL.revokeObjectURL(url);
   };
 
+  if (loading) {
+    return (
+      <div className="p-6 space-y-6">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="mx-auto text-blue-400 mb-4" size={48} />
+            <p className="text-gray-400 text-lg">Loading reports...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 space-y-6">
+      {/* API Error Banner */}
+      {error && (
+        <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2 text-yellow-300">
+            <AlertCircle size={20} />
+            <span className="text-sm">{error}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Reports & Analytics</h1>
           <p className="text-gray-400">Generate and export comprehensive parking reports</p>
         </div>
-        
+
         {/* Export Buttons */}
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={exportToPDF}
-            className="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
-          >
-            <FileText size={18} />
-            <span>Export PDF</span>
-          </button>
-          <button
             onClick={exportToCSV}
-            className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
+            disabled={!reportData.bookings.length}
+            className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download size={18} />
             <span>Export CSV</span>
           </button>
           <button
             onClick={exportToExcel}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
+            disabled={!reportData.bookings.length}
+            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download size={18} />
             <span>Export Excel</span>
@@ -260,7 +242,7 @@ const Reports = () => {
           color="cyan"
         />
         <SummaryCard
-          icon={FileText}
+          icon={AlertCircle}
           title="Cancelled"
           value={reportData.summary.cancelledBookings.toLocaleString()}
           color="red"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Users, Award, TrendingUp } from 'lucide-react';
+import { Target, Users, Award, TrendingUp, User } from 'lucide-react';
 
 const AboutUs = () => {
   return (
@@ -90,6 +90,33 @@ const AboutUs = () => {
           </div>
         </div>
 
+        {/* Team Section */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Meet Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <TeamMemberCard
+              name="GUNDU DHANUSH"
+              role="TEAM LEAD"
+              gradient="from-blue-600 to-cyan-600"
+            />
+            <TeamMemberCard
+              name="CHALLA NAGASAINITHIN"
+              role="UI/UX DESIGNER"
+              gradient="from-purple-600 to-pink-600"
+            />
+            <TeamMemberCard
+              name="CHERUKURI MADHU"
+              role="API INTEGRATOR"
+              gradient="from-green-600 to-emerald-600"
+            />
+            <TeamMemberCard
+              name="UPPATHALA LAXMAN"
+              role="MODEL BUILDER"
+              gradient="from-orange-600 to-red-600"
+            />
+          </div>
+        </div>
+
         {/* Team CTA */}
         <div className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Join Our Journey</h2>
@@ -120,6 +147,16 @@ const ValueCard = ({ icon: Icon, title, description }) => (
     </div>
     <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
     <p className="text-gray-400">{description}</p>
+  </div>
+);
+
+const TeamMemberCard = ({ name, role, gradient }) => (
+  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-all duration-300 hover:transform hover:scale-105">
+    <div className={`bg-gradient-to-br ${gradient} w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto`}>
+      <User size={32} className="text-white" />
+    </div>
+    <h3 className="text-lg font-bold text-white text-center mb-2">{name}</h3>
+    <p className="text-blue-400 text-sm text-center font-semibold">{role}</p>
   </div>
 );
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Note: We keep these Lucide icons for the Features, Pricing, and CTA sections that still use Tailwind
 import { ArrowRight, Search, Shield, DollarSign, CheckCircle, Phone } from 'lucide-react';
+import Footer from '../components/Footer';
 import blogImg1 from './gemni.png';
 import blogImg2 from './3.png';
 import blogImg3 from './2.png'; // <-- added import for third image
@@ -1286,152 +1287,6 @@ const TopFeaturesBar = () => {
 
 
 
-// --- ADD: FuturisticFooter component (replaces the old simple footer) ---
-const FuturisticFooter = () => (
-  <footer className="futuristic-footer" role="contentinfo">
-    <style>{`
-      /* --- FUTURISTIC FOOTER STYLES (copied from your HTML) --- */
-      .futuristic-footer {
-          background-color: #161b22;
-          color: #c9d1d9;
-          padding: 60px 20px 30px 20px;
-          border-top: 2px solid #38bdf8;
-          position: relative;
-          overflow: hidden;
-          font-size: 0.95em;
-      }
-      .futuristic-footer::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle at 100% 100%, #161b22 10%, transparent 10%),
-                      linear-gradient(45deg, rgba(56, 189, 248, 0.05) 25%, transparent 25%),
-                      linear-gradient(-45deg, rgba(56, 189, 248, 0.05) 25%, transparent 25%);
-          background-size: 8px 8px;
-          opacity: 0.1;
-          pointer-events: none;
-      }
-      .footer-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 2.5fr 1fr 1fr 1fr;
-          gap: 40px;
-          text-align: left;
-          position: relative;
-          z-index: 10;
-      }
-      .footer-logo-info .logo {
-          font-size: 1.8em;
-          font-weight: 700;
-          color: #38bdf8;
-          margin-bottom: 5px;
-          display: flex;
-          align-items: center;
-      }
-      .footer-logo-info .logo i {
-          margin-right: 8px;
-          font-size: 1.2em;
-      }
-      .footer-logo-info p {
-          font-size: 0.85em;
-          color: #768390;
-          line-height: 1.6;
-          max-width: 300px;
-      }
-      .footer-column h4 {
-          font-size: 1em;
-          font-weight: 700;
-          color: #38bdf8;
-          margin-bottom: 18px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-      }
-      .footer-column ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-      }
-      .footer-column ul li {
-          margin-bottom: 10px;
-      }
-      .footer-column ul li a {
-          color: #c9d1d9;
-          text-decoration: none;
-          transition: color 0.3s ease;
-      }
-      .footer-column ul li a:hover {
-          color: #38bdf8;
-          text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
-      }
-      .footer-bottom {
-          max-width: 1200px;
-          margin: 50px auto 0 auto;
-          padding-top: 20px;
-          border-top: 1px solid rgba(56, 189, 248, 0.1);
-          text-align: center;
-          color: #768390;
-          font-size: 0.8em;
-          position: relative;
-          z-index: 10;
-      }
-      @media (max-width: 768px) {
-          .footer-container { grid-template-columns: 1fr 1fr; }
-          .footer-logo-info { grid-column: span 2; margin-bottom: 20px; }
-      }
-      @media (max-width: 480px) {
-          .footer-container { grid-template-columns: 1fr; }
-          .footer-logo-info { grid-column: span 1; margin-bottom: 30px; }
-      }
-    `}</style>
-
-    <div className="footer-container">
-      <div className="footer-logo-info">
-        <span className="logo"><i className="fas fa-microchip" aria-hidden="true" /> SmartPark [AI]</span>
-        <p>
-          The <strong>Next-Gen Mobility</strong> solution. We use machine learning to make urban parking intelligent, instant, and efficient.
-        </p>
-      </div>
-
-      <div className="footer-column" aria-labelledby="features-heading">
-        <h4 id="features-heading">Core Features</h4>
-        <ul>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Real-time Occupancy</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Dynamic Pricing</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Smart Navigation</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Mobile Payment</a></li>
-        </ul>
-      </div>
-
-
-
-      <div className="footer-column" aria-labelledby="resources-heading">
-        <h4 id="resources-heading">Resources</h4>
-        <ul>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Project Documentation</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">GitHub Repository</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Data Sources</a></li>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <li><a href="#">Legal Boilerplate</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div className="footer-bottom">
-      &copy; 2024 SmartPark Project | Created for [Hackathon Name]
-    </div>
-  </footer>
-);
 
 
 // Main Application Component
@@ -1444,7 +1299,7 @@ const App = () => {
          but is kept here as a conceptual placeholder for external dependencies. */}
       <script src="https://cdn.tailwindcss.com"></script>
       <Home />
-      <FuturisticFooter />
+      <Footer />
     </div>
   );
 };

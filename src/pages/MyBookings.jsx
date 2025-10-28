@@ -232,7 +232,7 @@ const MyBookings = () => {
                     <div className="flex items-center space-x-2 text-gray-300">
                       <MapPin size={16} className="text-blue-400" />
                       <span>
-                        Level {booking.level?.id?.split('-')[1]}, Slot #{booking.slot?.number}
+                        {booking.location?.name || 'Main Parking'}, Level {booking.level?.id?.split('-')[1]}, Slot #{booking.slot?.number}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2 text-gray-300">

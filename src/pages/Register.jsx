@@ -69,8 +69,17 @@ const Register = () => {
       return;
     }
 
-    // Simulate registration
-    const userData = {
+    // Check if user already exists
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const existingUser = registeredUsers.find(user => user.email === formData.email);
+
+    if (existingUser) {
+      setErrors({ ...errors, email: 'User with this email already exists. Please login instead.' });
+      return;
+    }
+
+    // Simulate registration - store user data
+    const newUser = {
       email: formData.email,
       name: formData.name,
       phone: formData.phone,
@@ -79,7 +88,12 @@ const Register = () => {
       vehicleNumber: '',
       vehicleType: 'car'
     };
-    login(userData);
+
+    registeredUsers.push(newUser);
+    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+    // Auto-login after registration
+    login(newUser);
     navigate('/dashboard');
   };
 
@@ -207,7 +221,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -252,11 +266,11 @@ const Register = () => {
               />
               <label className="ml-2 text-sm text-gray-300">
                 I agree to the{' '}
-                <Link to="/terms" className="text-blue-400 hover:text-blue-300">
+                <Link to="/terms" className="text-blue-400 hover:text-blue-300 transition-colors duration-200">
                   Terms of Service
                 </Link>{' '}
                 and{' '}
-                <Link to="/privacy" className="text-blue-400 hover:text-blue-300">
+                <Link to="/privacy" className="text-blue-400 hover:text-blue-300 transition-colors duration-200">
                   Privacy Policy
                 </Link>
               </label>
@@ -277,7 +291,7 @@ const Register = () => {
           {/* Sign In Link */}
           <p className="mt-6 text-center text-sm text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+            <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-200">
               Sign in
             </Link>
           </p>

@@ -16,10 +16,11 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [error, setError] = useState('');
 
-  // Redirect to dashboard if already logged in
+  // Redirect based on role if already logged in
   useEffect(() => {
     if (user) {
-      navigate('/dashboard');
+      const redirectPath = user.role === 'admin' ? '/admin' : '/dashboard';
+      navigate(redirectPath);
     }
   }, [user, navigate]);
 
@@ -49,19 +50,20 @@ const Login = () => {
       return;
     }
 
-    // Simulate login (in production, this would call an API)
-    const userData = {
-      email: formData.email,
-      name: formData.email.split('@')[0],
-      phone: '+91 98765 43210',
-      address: '123 Main Street',
-      city: 'Bangalore',
-      vehicleNumber: 'KA01AB1234',
-      vehicleType: 'car'
-    };
+    // Check if user is registered
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const registeredUser = registeredUsers.find(user => user.email === formData.email);
 
-    login(userData);
-    navigate('/dashboard');
+    if (!registeredUser) {
+      setError('User not found. Please register first.');
+      return;
+    }
+
+    // Use registered user data for login
+    login(registeredUser);
+    // Navigate based on role (determined by email)
+    const role = formData.email.toLowerCase().includes('admin') ? 'admin' : 'user';
+    navigate(role === 'admin' ? '/admin' : '/dashboard');
   };
 
   const handleChange = (e) => {
@@ -156,7 +158,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors duration-200"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -175,7 +177,7 @@ const Login = () => {
                 />
                 <span className="ml-2 text-sm text-gray-400">Remember me</span>
               </label>
-              <Link to="/forgot-password" className="text-sm text-cyan-400 hover:text-cyan-300">
+              <Link to="/forgot-password" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors duration-200">
                 Forgot password?
               </Link>
             </div>
@@ -201,7 +203,7 @@ const Login = () => {
 
           {/* Social Login Buttons */}
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center px-4 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-all">
+            <button className="flex items-center justify-center px-4 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -210,7 +212,7 @@ const Login = () => {
               </svg>
               <span className="text-white text-sm">Google</span>
             </button>
-            <button className="flex items-center justify-center px-4 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-all">
+            <button className="flex items-center justify-center px-4 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
@@ -221,7 +223,7 @@ const Login = () => {
           {/* Sign Up Link */}
           <p className="mt-6 text-center text-sm text-gray-400">
             Don't have an account?{' '}
-            <Link to="/register" className="text-cyan-400 hover:text-cyan-300 font-semibold">
+            <Link to="/register" className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors duration-200">
               Sign up
             </Link>
           </p>
@@ -230,7 +232,8 @@ const Login = () => {
         {/* Demo Credentials */}
         <div className="mt-6 bg-blue-900/20 border border-blue-700 rounded-lg p-4">
           <p className="text-sm text-blue-300 font-semibold mb-2">Demo Credentials:</p>
-          <p className="text-xs text-blue-200">Email: demo@smartparking.com</p>
+          <p className="text-xs text-blue-200">User: demo@smartparking.com</p>
+          <p className="text-xs text-blue-200">Admin: admin@smartparking.com</p>
           <p className="text-xs text-blue-200">Password: any password</p>
         </div>
       </div>

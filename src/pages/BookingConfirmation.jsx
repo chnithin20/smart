@@ -118,7 +118,7 @@ const BookingConfirmation = () => {
 
   const sendEmailConfirmation = () => {
     const subject = `Parking Booking Confirmation - ${confirmationNumber}`;
-    const body = `Dear ${booking?.name},\n\nYour parking booking has been confirmed!\n\nBooking Details:\n- Confirmation Number: ${confirmationNumber}\n- Location: Level ${booking?.level?.id?.split('-')[1]}, Slot #${booking?.slot?.number}\n- Date: ${booking?.date}\n- Time: ${booking?.startTime} (${booking?.duration}h)\n- Vehicle: ${booking?.vehicleNumber}\n- Amount Paid: ₹${price}\n\nThank you for choosing Smart Parking!`;
+    const body = `Dear ${booking?.name},\n\nYour parking booking has been confirmed!\n\nBooking Details:\n- Confirmation Number: ${confirmationNumber}\n- Location: ${booking?.location?.name}, Level ${booking?.level?.id?.split('-')[1]}, Slot #${booking?.slot?.number}\n- Date: ${booking?.date}\n- Time: ${booking?.startTime} (${booking?.duration}h)\n- Vehicle: ${booking?.vehicleNumber}\n- Amount Paid: ₹${price}\n\nThank you for choosing Smart Parking!`;
     
     window.location.href = `mailto:${booking?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
@@ -171,8 +171,8 @@ const BookingConfirmation = () => {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Location</p>
-                  <p className="text-white font-semibold">Level {booking.level?.id?.split('-')[1]}</p>
-                  <p className="text-gray-300">Slot #{booking.slot?.number}</p>
+                  <p className="text-white font-semibold">{booking.location?.name}</p>
+                  <p className="text-gray-300">Level {booking.level?.id?.split('-')[1]}, Slot #{booking.slot?.number}</p>
                 </div>
               </div>
 

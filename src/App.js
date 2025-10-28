@@ -27,6 +27,7 @@ import CookiePolicy from './pages/CookiePolicy';
 import { ParkingProvider } from './context/ParkingContext';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import Footer from './components/Footer';
 
 // Layout wrapper to conditionally show navbar/sidebar
 function AppLayout({ children }) {
@@ -46,19 +47,27 @@ function AppLayout({ children }) {
   };
 
   if (isPublicPage) {
-    return <div className="min-h-screen bg-gray-900">{children}</div>;
+    return (
+      <div className="min-h-screen bg-gray-900 flex flex-col">
+        {children}
+        <Footer />
+      </div>
+    );
   }
 
   return (
-    <div className="flex h-screen bg-gray-900 overflow-hidden">
-      <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Navbar onMenuClick={toggleSidebar} />
-        <main className="flex-1 overflow-y-auto bg-gray-900">
-          {children}
-        </main>
+    <div className="flex min-h-screen bg-gray-900 flex-col">
+      <div className="flex h-full flex-1 overflow-hidden">
+        <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Navbar onMenuClick={toggleSidebar} />
+          <main className="flex-1 overflow-y-auto bg-gray-900">
+            {children}
+          </main>
+        </div>
+        <QuickHelp />
       </div>
-      <QuickHelp />
+      <Footer />
     </div>
   );
 }
