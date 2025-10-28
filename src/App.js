@@ -57,17 +57,17 @@ function AppLayout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-gray-900 flex-col">
-      <div className="flex h-full flex-1 overflow-hidden">
+      <div className="flex flex-1">
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col">
           <Navbar onMenuClick={toggleSidebar} />
           <main className="flex-1 overflow-y-auto bg-gray-900">
             {children}
+            <Footer />
           </main>
         </div>
         <QuickHelp />
       </div>
-      <Footer />
     </div>
   );
 }

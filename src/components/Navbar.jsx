@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, User, Search, Menu, LogOut, UserCircle } from 'lucide-react';
+import { Bell, User, Search, Menu, LogOut, UserCircle, Home } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -12,6 +12,27 @@ const Navbar = ({ onMenuClick }) => {
     logout();
     navigate('/');
     setShowUserMenu(false);
+  };
+
+  const handleBackNavigation = () => {
+    if (!isAuthenticated()) {
+      // Not logged in - go to home page
+      navigate('/');
+    } else {
+      // Logged in - navigate based on role
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  };
+
+  const getBackButtonText = () => {
+    if (!isAuthenticated()) {
+      return 'Home';
+    }
+    return user?.role === 'admin' ? 'Admin Panel' : 'Dashboard';
   };
 
   return (
@@ -54,6 +75,15 @@ const Navbar = ({ onMenuClick }) => {
 
         {/* Right section */}
         <div className="flex items-center space-x-4">
+          {/* Back to Home/Dashboard Button */}
+          <button
+            onClick={handleBackNavigation}
+            className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            <Home size={18} />
+            <span className="hidden sm:inline text-sm font-medium">{getBackButtonText()}</span>
+          </button>
+
           {/* Notifications */}
           <button className="relative text-gray-300 hover:text-white transition-colors">
             <Bell size={22} />

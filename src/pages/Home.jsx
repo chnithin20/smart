@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Note: We keep these Lucide icons for the Features, Pricing, and CTA sections that still use Tailwind
 import { ArrowRight, Search, Shield, DollarSign, CheckCircle, Phone } from 'lucide-react';
-import Footer from '../components/Footer';
+import { useAuth } from '../context/AuthContext';
 import blogImg1 from './gemni.png';
 import blogImg2 from './3.png';
 import blogImg3 from './2.png'; // <-- added import for third image
@@ -1162,6 +1162,23 @@ const StatsSection = ({ navigate }) => {
 // Navbar Component adapted to use custom CSS classes
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+
+  const handleBackNavigation = () => {
+    if (!isAuthenticated()) {
+      // Already on home, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Logged in - navigate based on role
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  };
+
   return (
     <nav className="navbar">
       <style>{`
@@ -1178,6 +1195,8 @@ const Navbar = () => {
         .nav-link { color: #c9d1d9; text-decoration: none; font-weight: 600; position: relative; padding: 6px 2px; }
         .nav-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: linear-gradient(90deg,#38bdf8,#8b5cf6); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; border-radius: 2px; }
         .nav-link:hover::after { transform: scaleX(1); }
+        .nav-back-btn { padding: 8px 16px; background: linear-gradient(135deg,#10b981,#059669); color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(16,185,129,.3); transition: transform .15s ease, box-shadow .2s ease; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
+        .nav-back-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16,185,129,.4); }
         .nav-cta { padding: 10px 14px; background: linear-gradient(135deg,#3b82f6,#8b5cf6); color: #fff; border-radius: 10px; font-weight: 800; text-decoration: none; box-shadow: 0 8px 18px rgba(99,102,241,.3); transition: transform .15s ease, box-shadow .2s ease; }
         .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(99,102,241,.4); }
         .hamburger { display: none; background: transparent; border: 0; color: #c9d1d9; font-size: 1.4rem; }
@@ -1201,6 +1220,12 @@ const Navbar = () => {
             <a href="#blog" className="nav-link">Blog</a>
             <a href="#contact" className="nav-link">Contact</a>
           </div>
+          {isAuthenticated() && (
+            <button onClick={handleBackNavigation} className="nav-back-btn">
+              <i className="fas fa-tachometer-alt"></i>
+              <span>{user?.role === 'admin' ? 'Admin Panel' : 'Dashboard'}</span>
+            </button>
+          )}
           <a href="/Register" className="nav-cta">Book Parking</a>
         </div>
       </div>
@@ -1299,7 +1324,7 @@ const App = () => {
          but is kept here as a conceptual placeholder for external dependencies. */}
       <script src="https://cdn.tailwindcss.com"></script>
       <Home />
-      <Footer />
+      {/* Footer is handled by App.js layout wrapper */}
     </div>
   );
 };

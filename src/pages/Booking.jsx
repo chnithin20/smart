@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Car, CreditCard, Check, Image as ImageIcon } from 'lucide-react';
+import { Calendar, Clock, MapPin, Car, CreditCard, Check, Image as ImageIcon, Home } from 'lucide-react';
 import { getParkingLevels } from '../api/parkingAPI';
 import { validateEmail, validatePhone, validateVehicleNumber, validateRequired, validateMinLength } from '../utils/validation';
+import { useAuth } from '../context/AuthContext';
 
 const Booking = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const [step, setStep] = useState(1);
   const [parkingLevels, setParkingLevels] = useState([]);
   const [booking, setBooking] = useState({
@@ -137,8 +139,36 @@ const Booking = () => {
   const selectedLevel = parkingLevels.find((level) => level.id === booking.level);
   const availableSlots = selectedLevel?.slots.filter((slot) => slot.status === 'available') || [];
 
+  const handleBackNavigation = () => {
+    if (!isAuthenticated()) {
+      navigate('/');
+    } else {
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  };
+
+  const getBackButtonText = () => {
+    if (!isAuthenticated()) {
+      return 'Back to Home';
+    }
+    return user?.role === 'admin' ? 'Admin Panel' : 'Dashboard';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 py-8 px-4 relative">
+      {/* Back to Dashboard/Home Button */}
+      <button
+        onClick={handleBackNavigation}
+        className="absolute top-6 left-6 z-20 flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-blue-500 group"
+      >
+        <Home size={18} className="group-hover:text-blue-400 transition-colors" />
+        <span className="text-sm font-medium">{getBackButtonText()}</span>
+      </button>
+
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

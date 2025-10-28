@@ -1,9 +1,21 @@
 import React from 'react';
-import { Shield, Lock, Eye, Database } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Shield, Lock, Eye, Database, Home } from 'lucide-react';
 
 const PrivacyPolicy = () => {
+  const navigate = useNavigate();
+  
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4">
+    <div className="min-h-screen bg-gray-900 py-12 px-4 relative">
+      {/* Back to Home Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 z-20 flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-blue-500 group"
+      >
+        <Home size={18} className="group-hover:text-blue-400 transition-colors" />
+        <span className="text-sm font-medium">Back to Home</span>
+      </button>
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

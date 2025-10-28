@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { CheckCircle, Calendar, Clock, MapPin, Car, Download, Mail } from 'lucide-react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { CheckCircle, Calendar, Clock, MapPin, Car, Download, Mail, Home } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -11,8 +11,9 @@ import { updateSlotStatus } from '../api/parkingAPI';
 
 const BookingConfirmation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { booking, price } = location.state || {};
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { updateSlot } = useParkingContext();
   const receiptRef = useRef();
   const confirmationNumber = Date.now().toString().slice(-8);
@@ -136,8 +137,36 @@ const BookingConfirmation = () => {
     );
   }
 
+  const handleBackNavigation = () => {
+    if (!isAuthenticated()) {
+      navigate('/');
+    } else {
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  };
+
+  const getBackButtonText = () => {
+    if (!isAuthenticated()) {
+      return 'Back to Home';
+    }
+    return user?.role === 'admin' ? 'Admin Panel' : 'Dashboard';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4">
+    <div className="min-h-screen bg-gray-900 py-12 px-4 relative">
+      {/* Back to Dashboard/Home Button */}
+      <button
+        onClick={handleBackNavigation}
+        className="absolute top-6 left-6 z-20 flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-green-500 group"
+      >
+        <Home size={18} className="group-hover:text-green-400 transition-colors" />
+        <span className="text-sm font-medium">{getBackButtonText()}</span>
+      </button>
+
       <div className="max-w-3xl mx-auto">
         {/* Success Message */}
         <div className="text-center mb-8">

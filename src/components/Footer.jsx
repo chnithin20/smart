@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Car, 
   Users, 
@@ -52,22 +53,22 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-6">Core Features</h4>
             <ul className="space-y-3 text-gray-400">
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              <Link to="/booking" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <Car size={16} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
                 <span>Dynamic Pricing</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/dashboard" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <Users size={16} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
                 <span>User Dashboard</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/admin" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <Shield size={16} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
                 <span>Admin Panel</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/analytics" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <FileText size={16} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
                 <span>Reports & Analytics</span>
-              </li>
+              </Link>
             </ul>
           </div>
 
@@ -75,22 +76,22 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-6">Resources</h4>
             <ul className="space-y-3 text-gray-400">
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              <Link to="/about" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <BookOpen size={16} className="text-green-400 group-hover:text-green-300 transition-colors" />
                 <span>Documentation</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/reports" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <MessageCircle size={16} className="text-green-400 group-hover:text-green-300 transition-colors" />
                 <span>API Reference</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/contact" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <Users2 size={16} className="text-green-400 group-hover:text-green-300 transition-colors" />
                 <span>Support</span>
-              </li>
-              <li className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
+              </Link>
+              <Link to="/about" className="flex items-center space-x-2 hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 group">
                 <ArrowRight size={16} className="text-green-400 group-hover:text-green-300 transition-colors" />
                 <span>Community</span>
-              </li>
+              </Link>
             </ul>
           </div>
 
@@ -98,9 +99,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-6">Company</h4>
             <ul className="space-y-3 text-gray-400">
-              <li><a href="/about" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">About Us</a></li>
-              <li><a href="/privacy" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">Privacy Policy</a></li>
-              <li><a href="/terms" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">Terms of Service</a></li>
+              <li><Link to="/about" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">About Us</Link></li>
+              <li><Link to="/privacy" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">Terms of Service</Link></li>
+              <li><Link to="/cookies" className="hover:text-white transition-all duration-200 cursor-pointer hover:translate-x-1 inline-block">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>
@@ -110,8 +112,10 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 SmartPark AI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <button type="button" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">License</button>
-              <button type="button" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">Security</button>
+              <Link to="/" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">Home</Link>
+              <Link to="/terms" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">License</Link>
+              <Link to="/privacy" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">Security</Link>
+              <Link to="/contact" className="hover:text-gray-400 transition-all duration-200 cursor-pointer hover:scale-105">Contact</Link>
             </div>
           </div>
         </div>

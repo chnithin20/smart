@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CreditCard, Lock, Check, AlertCircle } from 'lucide-react';
+import { CreditCard, Lock, Check, AlertCircle, Home } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const { booking, price } = location.state || {};
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [processing, setProcessing] = useState(false);
@@ -47,8 +49,36 @@ const Payment = () => {
     }, 2000);
   };
 
+  const handleBackNavigation = () => {
+    if (!isAuthenticated()) {
+      navigate('/');
+    } else {
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  };
+
+  const getBackButtonText = () => {
+    if (!isAuthenticated()) {
+      return 'Back to Home';
+    }
+    return user?.role === 'admin' ? 'Admin Panel' : 'Dashboard';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 py-8 px-4 relative">
+      {/* Back to Dashboard/Home Button */}
+      <button
+        onClick={handleBackNavigation}
+        className="absolute top-6 left-6 z-20 flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-green-500 group"
+      >
+        <Home size={18} className="group-hover:text-green-400 transition-colors" />
+        <span className="text-sm font-medium">{getBackButtonText()}</span>
+      </button>
+
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Secure Payment</h1>
